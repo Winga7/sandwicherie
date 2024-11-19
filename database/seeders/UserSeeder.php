@@ -4,14 +4,14 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
-class DatabaseSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        // Création des rôles ✨
+        // Création des rôles s'ils n'existent pas déjà ✨
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
         $orderManagerRole = Role::firstOrCreate(['name' => 'order_manager']);
         $userRole = Role::firstOrCreate(['name' => 'user']);

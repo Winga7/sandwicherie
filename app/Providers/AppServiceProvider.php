@@ -24,9 +24,6 @@ class AppServiceProvider extends ServiceProvider
     {
         // Définir la longueur par défaut des chaînes de caractères pour éviter les erreurs de migration
         Schema::defaultStringLength(191);
-
-        // Enregistrer les policies
-        $this->registerPolicies();
     }
 
     /**

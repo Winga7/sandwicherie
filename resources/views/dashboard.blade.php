@@ -1,15 +1,31 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+        <h2 class="font-semibold text-xl text-gray-100 leading-tight bg-gray-800">
+            {{ __('Tableau de bord') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
+            <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-100">
+                    <h3 class="text-xl mb-4">Bienvenue sur Panidel !</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-gray-700 p-4 rounded-lg">
+                            <h4 class="text-lg mb-2">Passer une commande</h4>
+                            <p class="mb-4">Choisissez parmi notre sélection de sandwichs</p>
+                            <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">
+                                Commander maintenant
+                            </button>
+                        </div>
+                        <div class="bg-gray-700 p-4 rounded-lg">
+                            <h4 class="text-lg mb-2">Mes commandes</h4>
+                            <p class="mb-4">Consultez l'historique de vos commandes</p>
+                            <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">
+                                Voir l'historique
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
