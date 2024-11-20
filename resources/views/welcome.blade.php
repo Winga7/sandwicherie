@@ -3,67 +3,98 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Laravel</title>
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <title>{{ config('app.name', 'Panidel') }}</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="bg-gray-900 text-white">
-        <nav class="fixed top-0 w-full bg-gray-900 shadow-lg z-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between h-16">
-                    <div class="flex-shrink-0 flex items-center">
-                        <img src="{{ asset('images/logo.png') }}" alt="Panidel Logo" class="h-8 w-auto mr-2">
-                        <h1 class="text-xl font-bold text-gray-100">Panidel</h1>
-                    </div>
+    <body class="antialiased">
+        <div class="relative min-h-screen bg-gray-100 dark:bg-gray-900">
+            <!-- Navigation -->
+            @if (Route::has('login'))
+                <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">Dashboard</a>
+                    @else
+                        <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">Se connecter</a>
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">S'inscrire</a>
+                        @endif
+                    @endauth
+                </div>
+            @endif
 
-                    <div class="flex items-center">
-                        @auth
-                            <div class="relative">
-                                <button id="menuButton" class="text-gray-100 hover:text-indigo-400 p-2">
-                                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                                    </svg>
-                                </button>
-                                <div id="menuDropdown" class="hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5">
-                                    <div class="py-1">
-                                        <a href="{{ route('profile') }}" class="block px-4 py-2 text-sm text-gray-100 hover:bg-gray-700">Profil</a>
-                                        <form method="POST" action="{{ route('logout') }}">
-                                            @csrf
-                                            <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-100 hover:bg-gray-700">
-                                                Se déconnecter
-                                            </button>
-                                        </form>
+            <!-- Hero Section -->
+            <div class="pt-24 px-6">
+                <div class="max-w-7xl mx-auto">
+                    <h1 class="text-4xl font-bold text-center text-gray-900 dark:text-white mb-8">
+                        Bienvenue chez Panidel 🥪
+                    </h1>
+
+                    <!-- Promotions du jour -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+                                🌟 Promotions du jour
+                            </h2>
+                            @if(isset($dailySpecials))
+                                @forelse($dailySpecials as $special)
+                                    <div class="mb-4 p-4 border border-gray-200 dark:border-gray-700 rounded">
+                                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                            {{ $special->title }}
+                                        </h3>
+                                        <p class="text-gray-600 dark:text-gray-400 mt-2">
+                                            {{ $special->description }}
+                                        </p>
+                                        @if($special->price)
+                                            <p class="text-green-600 dark:text-green-400 font-semibold mt-2">
+                                                {{ number_format($special->price, 2) }} €
+                                            </p>
+                                        @endif
                                     </div>
+                                @empty
+                                    <p class="text-gray-600 dark:text-gray-400">
+                                        Aucune promotion en cours
+                                    </p>
+                                @endforelse
+                            @else
+                                <p class="text-gray-600 dark:text-gray-400">
+                                    Chargement des promotions...
+                                </p>
+                            @endif
+                        </div>
+
+                        <!-- Horaires et Contact -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+                                ⏰ Nos horaires
+                            </h2>
+                            <div class="space-y-2 text-gray-600 dark:text-gray-400">
+                                <p>Lundi - Vendredi : 9h30 - 15h00</p>
+                                <p>Samedi : 10h00 - 15h00</p>
+                                <p>Dimanche : Fermé</p>
+                            </div>
+
+                            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4 mt-8">
+                                📍 Où nous trouver
+                            </h2>
+                            <div class="space-y-2 text-gray-600 dark:text-gray-400">
+                                <p>Adresse : Pl. des Carmes 3, 1300 Wavre</p>
+                                <p>Téléphone : 010 22 75 35</p>
+                                <p>Email : contact@panidel.com</p>
+                                <div class="mt-4 aspect-video w-full">
+                                    <iframe
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2526.2426197893155!2d4.6078483!3d50.7154379!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c17d75b55b145f%3A0x63efd4c18bf251f0!2sPanidel%20Snack!5e0!3m2!1sfr!2sbe!4v1732109298829!5m2!1sfr!2sbe"
+                                        class="w-full h-full rounded-lg"
+                                        style="border:0;"
+                                        allowfullscreen=""
+                                        loading="lazy"
+                                        referrerpolicy="no-referrer-when-downgrade">
+                                    </iframe>
                                 </div>
                             </div>
-                        @else
-                            <a href="{{ route('login') }}" class="text-gray-100 hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium">
-                                Connexion
-                            </a>
-                        @endauth
+                        </div>
                     </div>
                 </div>
             </div>
-        </nav>
-
-        <main class="pt-16">
-            <!-- Contenu principal ici -->
-        </main>
-
-        <script>
-            const menuButton = document.getElementById('menuButton');
-            const menuDropdown = document.getElementById('menuDropdown');
-
-            menuButton?.addEventListener('click', () => {
-                menuDropdown?.classList.toggle('hidden');
-            });
-
-            window.addEventListener('click', (e) => {
-                if (!menuButton?.contains(e.target)) {
-                    menuDropdown?.classList.add('hidden');
-                }
-            });
-        </script>
+        </div>
     </body>
 </html>

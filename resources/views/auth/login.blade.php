@@ -19,7 +19,7 @@
         </div>
 
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" class="text-gray-100" />
+            <x-input-label for="password" :value="__('Mot de passe')" class="text-gray-100" />
             <x-text-input id="password"
                 class="block mt-1 w-full bg-gray-700 border-gray-600 text-gray-100 focus:border-indigo-500 focus:ring-indigo-500"
                 type="password"

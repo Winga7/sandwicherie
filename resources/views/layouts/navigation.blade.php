@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('welcome') }}">
                         <img src="{{ asset('images/logo.png') }}" alt="Panidel Logo" class="h-8 w-auto">
                     </a>
                 </div>
@@ -15,6 +15,12 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-gray-100 hover:text-indigo-400">
                         {{ __('Tableau de bord') }}
                     </x-nav-link>
+
+                    @role('admin')
+                        <x-nav-link :href="route('admin.daily-specials.index')" :active="request()->routeIs('admin.daily-specials.*')">
+                            {{ __('Promotions') }}
+                        </x-nav-link>
+                    @endrole
                 </div>
             </div>
 
