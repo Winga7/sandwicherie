@@ -11,7 +11,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h3 class="text-lg font-semibold mb-4">Ajouter une promotion</h3>
-                    <form action="{{ route('admin.daily-specials.store') }}" method="POST" class="space-y-4">
+                    <form action="{{ route('admin.daily-specials.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div>
                             <x-input-label for="title" value="Titre" />
@@ -33,7 +33,14 @@
                             <x-input-error :messages="$errors->get('price')" class="mt-2" />
                         </div>
 
-                        <x-primary-button>
+                        <div>
+                            <x-input-label for="image" value="Image (optionnel)" />
+                            <input type="file" id="image" name="image" accept="image/*"
+                                class="mt-1 block w-full text-gray-900 dark:text-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm">
+                            <x-input-error :messages="$errors->get('image')" class="mt-2" />
+                        </div>
+
+                        <x-primary-button @class(['!bg-blue-600 hover:!bg-blue-700'])>
                             Ajouter la promotion
                         </x-primary-button>
                     </form>
@@ -47,12 +54,19 @@
                     <div class="space-y-4">
                         @forelse($dailySpecials as $special)
                             <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                                <div>
-                                    <h4 class="font-semibold">{{ $special->title }}</h4>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">{{ $special->description }}</p>
-                                    @if($special->price)
-                                        <p class="text-sm text-green-600 dark:text-green-400">{{ number_format($special->price, 2) }} €</p>
+                                <div class="flex items-center space-x-4">
+                                    @if($special->image_path)
+                                        <img src="{{ asset('storage/' . $special->image_path) }}"
+                                             alt="{{ $special->title }}"
+                                             class="w-24 h-24 object-cover rounded-lg">
                                     @endif
+                                    <div>
+                                        <h4 class="font-semibold">{{ $special->title }}</h4>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ $special->description }}</p>
+                                        @if($special->price)
+                                            <p class="text-sm text-green-600 dark:text-green-400">{{ number_format($special->price, 2) }} €</p>
+                                        @endif
+                                    </div>
                                 </div>
                                 <div class="flex space-x-2">
                                     <form action="{{ route('admin.daily-specials.toggle', $special) }}" method="POST">
@@ -79,4 +93,4 @@
             </div>
         </div>
     </div>
-</x-app-layout> 
+</x-app-layout>

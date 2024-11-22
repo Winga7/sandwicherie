@@ -32,9 +32,9 @@
                         <div class="bg-gray-700 p-4 rounded-lg">
                             <h4 class="text-lg mb-2">Mes commandes</h4>
                             <p class="mb-4">Consultez l'historique de vos commandes</p>
-                            <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">
+                            <a href="{{ route('orders.history') }}" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded transition-colors duration-300">
                                 Voir l'historique
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>

@@ -10,6 +10,7 @@ class DailySpecial extends Model
         'title',
         'description',
         'price',
+        'image_path',
         'is_active'
     ];
 

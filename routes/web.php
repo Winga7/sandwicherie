@@ -5,8 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DailySpecialController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\WelcomeController;
 
-Route::get('/', [DailySpecialController::class, 'welcome'])->name('welcome');
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
@@ -35,6 +37,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('sandwiches.index');
 
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add')->middleware(['auth']);
+
+    Route::get('/orders/history', [OrderController::class, 'history'])
+        ->name('orders.history');
 });
 
 require __DIR__ . '/auth.php';
